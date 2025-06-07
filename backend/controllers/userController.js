@@ -1,39 +1,27 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const generateToken = (user) =>
-  jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: '1h'
-  });
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'user' }
+});
 
-exports.register = async (req, res) => {
-  const { name, email, password, role } = req.body;
-
+// Automatically hash password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   try {
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ error: 'Email already registered' });
-
-    const user = await User.create({ name, email, password, role });
-    const token = generateToken(user);
-
-    res.status(201).json({ token });
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
   } catch (err) {
-    res.status(500).json({ error: 'Registration failed' });
+    next(err);
   }
+});
+
+// Compare password method
+userSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
-exports.login = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.findOne({ email });
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    const token = generateToken(user);
-    res.json({ token });
-  } catch (err) {
-    res.status(500).json({ error: 'Login failed' });
-  }
-};
+module.exports = mongoose.model('User', userSchema);
