@@ -1,0 +1,30 @@
+# Node dependencies
+**/node_modules/
+**/npm-debug.log
+
+# dotenv env files
+**/.env
+**/.env.local
+**/.env.*.local
+**/.env.example  # Optional to ignore
+
+# Build outputs
+frontend/build/
+backend/build/
+mail-service/build/
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Docker-related
+**/.dockerignore
+docker-compose.override.yml
+
+# VS Code or editor settings
+.vscode/
+.idea/
