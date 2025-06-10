@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const authenticate = (req, res, next) => {
+// Middleware to verify JWT token
+const protect = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -16,11 +17,12 @@ const authenticate = (req, res, next) => {
   }
 };
 
-const isAdmin = (req, res, next) => {
+// Middleware to check if user has admin role
+const adminOnly = (req, res, next) => {
   if (req.user?.role !== 'admin') {
     return res.status(403).json({ error: 'Admin access required' });
   }
   next();
 };
 
-module.exports = { authenticate, isAdmin };
+module.exports = { protect, adminOnly };
