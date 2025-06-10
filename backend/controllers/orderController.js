@@ -3,20 +3,20 @@ const Order = require('../models/Order');
 // Create a new order
 exports.createOrder = async (req, res) => {
   try {
-    const newOrder = {
-      user: req.user.userId, // pulled from token
-      hamper: req.body.hamper,
-      quantity: req.body.quantity,
-      deliveryAddress: req.body.deliveryAddress
-    };
+    console.log('Incoming order body:', req.body); // DEBUG
 
-    const order = await Order.create(newOrder);
+    const order = await Order.create({
+      ...req.body,
+      user: req.user.userId // ⬅️ ensure you're setting this from token
+    });
+
     res.status(201).json(order);
   } catch (err) {
-    console.error('Create order error:', err);
-    res.status(500).json({ error: 'Failed to create order' });
+    console.error('Create order error:', err); // DEBUG
+    res.status(500).json({ error: 'Failed to create order', details: err.message });
   }
 };
+
 
 
 // Get all orders
