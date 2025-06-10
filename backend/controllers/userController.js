@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ token });
   } catch (err) {
-    console.error('Registration error:', err); // 🔍 log the actual error
+    console.error('Registration error:', err); 
     res.status(500).json({ error: 'Registration failed' });
   }
 };
@@ -33,7 +33,15 @@ exports.login = async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.json({ token });
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role // ✅ Add this line
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
   }

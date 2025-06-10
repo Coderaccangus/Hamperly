@@ -1,0 +1,52 @@
+.landing-container {
+  text-align: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.button-group {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  color: white;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.btn.admin {
+  background-color: #6c757d;
+}
+
+.dashboard-container {
+  padding: 2rem;
+  text-align: left;
+}
+
+.order-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.order-item {
+  background-color: #f2f2f2;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.success-text {
+  color: green;
+  margin-top: 1rem;
+}
+
+.form select {
+  padding: 0.5rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+}
