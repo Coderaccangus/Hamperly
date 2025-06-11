@@ -35,8 +35,8 @@ const AdminLoginPage = () => {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Optional: Check if user is admin before proceeding
-      if (!data.user?.isAdmin) {
+      // ✅ Corrected admin role check
+      if (data.user?.role !== 'admin') {
         throw new Error('Access denied: Not an admin account');
       }
 

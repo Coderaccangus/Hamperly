@@ -26,12 +26,13 @@ app.use(express.json());
 const userRoutes = require('./routes/userRoutes');
 const hamperRoutes = require('./routes/hamperRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 // Mount routes
 app.use('/api/users', userRoutes);
 app.use('/api/hampers', hamperRoutes);
 app.use('/api/orders', orderRoutes);
-
+app.use('/api/admin', adminRoutes)
 
 // Base route
 app.get('/', (req, res) => {

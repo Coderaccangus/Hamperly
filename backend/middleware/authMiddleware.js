@@ -20,9 +20,10 @@ const protect = (req, res, next) => {
 // Middleware to check if user has admin role
 const adminOnly = (req, res, next) => {
   if (req.user?.role !== 'admin') {
-    return res.status(403).json({ error: 'Admin access required' });
+    return res.status(403).json({ error: 'Access denied: Not an admin account' });
   }
   next();
 };
+
 
 module.exports = { protect, adminOnly };
